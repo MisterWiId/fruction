@@ -28,36 +28,91 @@ public:
         cout << num << "/" << denum << endl;
     }
     // Функция сокращения дроби
-    void redaction(int num1, int num2)
+    void redaction(Fraction number)
     {
         int a = 0;
-        if (num1 > num2)
+        if (number.num > number.denum)
         {
-            a = num1;
+            a = number.num;
         }
-        else if (num1 < num2)
+        else if (number.num < number.denum)
         {
-            a = num2;
+            a = number.denum;
         }
         else
         {
             a = 0;
         }
-        for (size_t i = 0; i < a; i++)
+        for (size_t i = 2; i < a; i++)
         {
-            if (num1 % (i + 1) == 0 and num2 % (i + 1) == 0)
+            if (number.num % i == 0 and number.denum % i == 0)
             {
-                num1 = num1 / (i + 1);
-                num2 = num2 / (i + 1);
+                num = number.num / i;
+                denum = number.denum / i;
             }
         }
-        cout << num1 << "/" << num2 << endl;
+    }
+
+    Fraction operator * (Fraction b) 
+    {    
+        return Fraction(num * b.num, denum * b.denum);
+    }
+    Fraction operator / (Fraction b)
+    {
+        return Fraction(num * b.denum, denum * b.num);
+    }
+    Fraction operator + (Fraction b)
+    {
+        return Fraction(num + b.num, denum * b.denum);
+    }
+    Fraction operator - (Fraction b)
+    {
+        return Fraction(num - b.num, denum * b.denum);
+    }
+    Fraction operator == (Fraction b)
+    {
+        return Fraction(num = b.num, denum = b.denum);
+    }
+    Fraction operator <= (Fraction b)
+    {
+        return Fraction(b.num, b.denum);
+    }
+    Fraction operator >= (Fraction b)
+    {
+        return Fraction(num, denum);
+    }
+    Fraction operator -= (Fraction b)
+    {
+        return Fraction(num = (num - b.num), denum = (denum * b.denum));
+    }
+    Fraction operator += (Fraction b)
+    {
+        return Fraction(num = (num + b.num), denum = (denum * b.denum));
+    }
+    Fraction operator *= (Fraction b)
+    {
+        return Fraction(num = (num * b.num), denum = (denum * b.denum));
+    }
+    Fraction operator *= (Fraction b)
+    {
+        return Fraction(num = (num * b.denum), denum = (denum * b.num));
     }
 };
 
 int main()
 {
-    Fraction fraction = Fraction(4, 10);
+    Fraction fraction;
+    fraction.redaction(Fraction(4, 10));
     fraction.print();
-    fraction.redaction(100, 10);
+    
+
+    Fraction a = Fraction(0, 4);
+    Fraction b = Fraction(40, 10);
+    Fraction c = a == b;
+    c.redaction(c);
+    c.print();
+
+    int i = 1;
+    i = i++ + ++i;
+    cout << i;
 }
